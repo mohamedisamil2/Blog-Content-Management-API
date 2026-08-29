@@ -5,8 +5,10 @@
     "lib": ["es2023"],
     "target": "es2023",
     "module": "esnext",
+    "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node"],
+    "noEmit": true
   }
 }
