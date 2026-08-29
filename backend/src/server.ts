@@ -1,24 +1,19 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-import { gql } from "graphql-tag"
 
-const typeDefs = gql`
-type Query {
-    sayHi:String!
+import 'dotenv/config'
+import { connectDB } from "./config/db.ts";
+import { createApp } from "./app.ts";
+
+const port = process.env.PORT || 4000;
+
+export async function startServer() {
+  
+  await connectDB();
+  const app = await createApp();
+
+  app.listen(port, () => {
+    
+    console.log(`🚀Server running on http://localhost:${port}/graphql`);
+  })
 }
-`
-const resolvers = {
-    Query: {
-      sayHi:() => "hello world"
-    }
-}
 
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-});
-
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
-});
-console.log(`🚀  Server ready at: ${url}`);
+startServer();
