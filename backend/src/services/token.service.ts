@@ -16,18 +16,21 @@ const refreshAccess = new TextEncoder().encode(process.env.Refresh_SECRET_TOKEN)
 export interface TokenPayload{
     id: string,
     email: string,
+    role:"admin" | "user",
     jti?:string,
 }
 
 export interface TokenUser{
     _id: string,
-    email:string,
+    email: string,
+    role:"admin"|"user",
+
 }
 
 
 export async function generateAccessToken(user:TokenUser):Promise<string> {
     
-    return await new SignJWT({ id: user._id.toString(), email: user.email })
+    return await new SignJWT({ id: user._id.toString(), email: user.email, role:user.role })
         .setProtectedHeader({ alg: "HS256" })        
         .setExpirationTime("15m")
         .sign(secretAccess)
@@ -37,7 +40,7 @@ export async function generateAccessToken(user:TokenUser):Promise<string> {
 
 // 
 export async function generateRefreshToken(user:TokenUser): Promise<string> {
-    return await new SignJWT({ id: user._id.toString(), email: user.email })
+    return await new SignJWT({ id: user._id.toString(), email: user.email, role:user.role })
         .setProtectedHeader({ alg: "HS256" })
         .setJti(randomUUID())
         .setExpirationTime("30d")
@@ -52,6 +55,7 @@ export async function verifyToken(token: string): Promise<TokenPayload & { exp: 
     return {
         id: payload.id as string,
         email: payload.email as string,
+        role: payload.role as 'admin' | 'user',
         jti: payload.jti as string,
         exp: payload.exp as number,
     }

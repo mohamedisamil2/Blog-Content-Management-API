@@ -4,7 +4,8 @@ import type { Request,Response } from "express";
 // بيانات المستخدم الحتكون في resolvers
 export interface AuthUser{
     id: string,
-    email:string,
+    email: string,
+    role: "admin"|"user",
 } 
 
 // شكل الكونتكست الحيشيلو كل ريسولفر
@@ -35,6 +36,7 @@ export async function createContext({req,res}:{req:Request, res:Response} ): Pro
             user: {
                 id: payload.id as string,
                 email: payload.email as string,
+                role: payload.role as 'admin' | 'user',
             },
             req,
             res,
