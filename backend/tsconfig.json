@@ -8,7 +8,7 @@
     "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "types": ["node"],
+    "types": ["node","jest"],
     "noEmit": true
   }
 }
