@@ -9,7 +9,7 @@ export function requireAdmin(user:AuthUser| null):AuthUser {
     }
 
     if (user.role !== "admin") {
-        throw new ForbiddenError("Only admin can be perform this action")
+        throw new ForbiddenError("Only admin can perform this action")
     }
     return user;
 }
