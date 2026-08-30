@@ -44,8 +44,8 @@ export async function createUser(input:CreateUserInput):Promise<AuthResult> {
         password: hashedPassword,
     });
     
-    const accessToken = await generateAccessToken({ _id: user._id.toString(), email: user.email });
-    const refreshToken = await generateRefreshToken({ _id: user._id.toString(), email: user.email });
+    const accessToken = await generateAccessToken({ _id: user._id.toString(), email: user.email, role:user.role });
+    const refreshToken = await generateRefreshToken({ _id: user._id.toString(), email: user.email, role:user.role });
 
     // 4. Return user
     return { user, accessToken, refreshToken };
@@ -80,8 +80,8 @@ export async function loginUser(input: LoginInput): Promise<AuthResult> {
         throw new ValidationError("The password does not match ")
     }
 
-    const accessToken = await generateAccessToken({_id: user._id.toString(), email: user.email });
-    const refreshToken = await generateRefreshToken({ _id: user._id.toString(), email: user.email });
+    const accessToken = await generateAccessToken({_id: user._id.toString(), email: user.email, role:user.role });
+    const refreshToken = await generateRefreshToken({ _id: user._id.toString(), email: user.email, role:user.role });
 
     // 4. Return user
     return { user, accessToken, refreshToken };
@@ -113,7 +113,7 @@ export async function refreshAccessToken(refreshToken:string | undefined):Promis
     throw new AuthenticationError('No active session found');
   }
 
-    const { id, email, jti } = await verifyToken(refreshToken);
+    const { id, email,role, jti } = await verifyToken(refreshToken);
 
      if (!jti) {
     throw new AuthenticationError('Invalid session token');
@@ -124,7 +124,7 @@ export async function refreshAccessToken(refreshToken:string | undefined):Promis
         throw new AuthenticationError('Session has been revoked');
     }
 
-    const newAccessToken = await generateAccessToken({ _id: id, email });
+    const newAccessToken = await generateAccessToken({ _id: id, email,role });
 
     return newAccessToken;
 
