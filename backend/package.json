@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch ./src/server.ts",
     "typecheck": "tsc --noEmit",
-    "start": "node ./src/server.ts"
+    "start": "node ./src/server.ts",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
