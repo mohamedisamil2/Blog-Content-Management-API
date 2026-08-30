@@ -124,7 +124,7 @@ export async function refreshAccessToken(refreshToken:string | undefined):Promis
         throw new AuthenticationError('Session has been revoked');
     }
 
-    const newAccessToken = await generateAccessToken({ _id: id, email,role });
+    const newAccessToken = await generateAccessToken({ _id: id, email, role });
 
     return newAccessToken;
 
