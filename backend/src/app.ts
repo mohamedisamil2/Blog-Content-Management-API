@@ -7,7 +7,12 @@ import { createContext } from "./middleware/auth.ts";
 
 export async function createApp() {
     const app = express();
-    const apolloServer = new ApolloServer({ schema,formatError:(formattedError, error)=> {
+    const apolloServer = new ApolloServer({
+        schema,
+        csrfPrevention: {
+            requestHeaders: ['x-apollo-operation-name', 'apollo-require-preflight', 'authorization'],
+        },
+        formatError: (formattedError, error) => {
         console.error(error)
         return formattedError; 
     }, })

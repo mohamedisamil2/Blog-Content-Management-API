@@ -1,5 +1,5 @@
-import { AuthUser } from "../middleware/auth";
-import { AuthenticationError, ForbiddenError } from "./errors";
+import {type AuthUser } from "../middleware/auth.ts";
+import { AuthenticationError, ForbiddenError } from "./errors.ts";
 
 
 

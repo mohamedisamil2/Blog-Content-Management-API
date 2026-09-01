@@ -46,10 +46,10 @@ export const userResolver = {
             return true;
         },
         // resolvers/user.resolver.ts
-refreshToken: async (_parent: unknown, _args: unknown, context: MyContext) => {
-  const accessToken = await refreshAccessToken(context.req.cookies?.refreshToken);
-  return { accessToken };  // ✅ لف الـ string في object
-},
+        refreshToken: async (_parent: unknown, _args: unknown, context: MyContext) => {
+            const accessToken = await refreshAccessToken(context.req.cookies?.refreshToken);
+            return { accessToken };  // ✅ لف الـ string في object
+        },
     },
     
      Query: {
