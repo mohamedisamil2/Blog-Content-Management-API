@@ -20,11 +20,12 @@ if (!process.env.SECRET_TOKEN) {
 }
 
 const secret = new TextEncoder().encode(process.env.SECRET_TOKEN);
+console.log('AUTH SECRET LENGTH:', process.env.SECRET_TOKEN?.length); 
 
 export async function createContext({req,res}:{req:Request, res:Response} ): Promise <MyContext> {
     const authHeader = req.headers.authorization || '';
-    const token = authHeader.replace('Bearer', '')
-
+    const token = authHeader.replace('Bearer ', '');
+    
     if (!token) {
         return {user: null,req,res}
     }

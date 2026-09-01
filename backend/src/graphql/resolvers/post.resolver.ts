@@ -1,0 +1,32 @@
+import {type MyContext } from "../../middleware/auth.ts";
+import { type CreatePostInput, createPostService, deletePostService, getAllPosts, getPostById } from "../../services/post.service.ts";
+import { requireAdmin } from "../../utils/requireAdmin.ts";
+
+
+
+export const postResolver = {
+    Mutation: {
+        createPost: async (_parent: unknown, args: { input: CreatePostInput}, context: MyContext) => {
+            
+            const admin = requireAdmin(context.user);
+
+            const post = await createPostService(args.input, admin.id);
+            return post;
+        },
+        deletePost: async (_parent: unknown, args: { id: string }, context: MyContext) => {
+            const admin = requireAdmin(context.user);
+            const post = await deletePostService(args.id, admin.id);
+            return true;
+        }
+    },
+    Query: {
+        
+        posts: async (_: unknown) => {
+            return await getAllPosts();
+        },
+
+        post: async (_: unknown, args: { id: string }) => {
+            return await getPostById(args.id);
+        },
+    },
+}

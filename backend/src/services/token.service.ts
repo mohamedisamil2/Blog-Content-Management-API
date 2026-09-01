@@ -1,17 +1,16 @@
 import { jwtVerify, SignJWT } from "jose";
-import type{ IUser } from "../models/userModel.ts";
 import { randomUUID } from "crypto";
 import { RevokedToken } from "../models/revokedTokenModel.ts";
 
 
 
-if (!process.env.SECRET_TOKEN || !process.env.Refresh_SECRET_TOKEN) {
+if (!process.env.SECRET_TOKEN || !process.env.REFRESh_SECRET_TOKEN) {
     throw new Error("JWT secrets are not defined in environment variables");
 }
 
 
 const secretAccess = new TextEncoder().encode(process.env.SECRET_TOKEN)
-const refreshAccess = new TextEncoder().encode(process.env.Refresh_SECRET_TOKEN)
+const refreshAccess = new TextEncoder().encode(process.env.REFRESh_SECRET_TOKEN)
 
 export interface TokenPayload{
     id: string,
@@ -30,11 +29,12 @@ export interface TokenUser{
 
 export async function generateAccessToken(user:TokenUser):Promise<string> {
     
-    return await new SignJWT({ id: user._id.toString(), email: user.email, role:user.role })
+    const token= await new SignJWT({ id: user._id.toString(), email: user.email, role:user.role })
         .setProtectedHeader({ alg: "HS256" })        
         .setExpirationTime("15m")
         .sign(secretAccess)
 
+    return token;
 }
 
 

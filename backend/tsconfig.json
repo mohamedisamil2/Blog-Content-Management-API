@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "rootDir": "./src",
-    // "outDir": "./src",
     "lib": ["es2023"],
     "target": "es2023",
     "module": "esnext",
     "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "types": ["node","jest"],
-    "noEmit": true
+    "types": ["node", "jest"],
+    "noEmit": true,
+    "strict": true,
+    "strictNullChecks": true
   }
 }
