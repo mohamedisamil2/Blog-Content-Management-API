@@ -9,6 +9,12 @@ export interface CreatePostInput{
     categoryId:string,
 }
 
+export interface UpdatePostInput{
+    title: string,
+    content: string,
+    categoryId:string,
+}
+
 export async function createPostService(input: CreatePostInput, authorId: string):Promise<IPost> {
     const { title, content, categoryId } = input;
     
@@ -52,5 +58,22 @@ export async function deletePostService(id:string, authorId:string):Promise<void
     }
     
     await Posts.findByIdAndDelete(id).populate("author");
+}
 
+// Update Post By Id 
+export async function updatePostService(id:string, authorId:string, input:UpdatePostInput):Promise<IPost> {
+    const postId = await getPostById(id);
+
+    if (postId?.author._id.toString() !== authorId) {
+        throw new ForbiddenError("you can only update your own posts")
+    }
+
+    const updatePost = await Posts.findByIdAndUpdate(id, input,
+        { new: true }).populate(["author", "category"]);
+
+    if (!updatePost) {
+        throw new NotFoundError("post not found")
+    }
+
+    return updatePost;
 }

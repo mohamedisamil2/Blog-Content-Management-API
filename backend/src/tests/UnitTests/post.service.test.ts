@@ -99,7 +99,10 @@ describe("deletePost", () => {
             user._id.toString()
         );
 
+
+
         const postId = post._id.toString();
+
 
         await expect(deletePostService(postId, fakeAuthorId)).rejects.toThrow("you can only delete your own posts")
     });
@@ -190,5 +193,10 @@ describe("getPostById", () => {
        
         await expect(getPostById(fakeId)).rejects.toThrow("Post not found")
 
+    });
+});
+
+
     })
 })
+
