@@ -1,9 +1,9 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { Document, model } from "mongoose";
 import { Schema } from "mongoose";
 
 
 
-export interface IPost {
+export interface IPost extends Document {
     title: string,
     content: string,
     author: mongoose.Types.ObjectId,
