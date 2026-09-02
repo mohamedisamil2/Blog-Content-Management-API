@@ -185,13 +185,7 @@ describe("getPostById", () => {
 
     test("should throw notFoundError if post not exists", async () => {
         const fakeId = new mongoose.Types.ObjectId().toString();
-       
         await expect(getPostById(fakeId)).rejects.toThrow("Post not found")
-
-<<<<<<< Updated upstream
-    })
-})
-=======
     });
 });
 
@@ -246,4 +240,4 @@ describe("updatePost", () => {
     })
 })    
 
->>>>>>> Stashed changes
+
