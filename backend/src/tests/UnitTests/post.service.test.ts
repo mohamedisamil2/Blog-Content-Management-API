@@ -99,7 +99,10 @@ describe("deletePost", () => {
             user._id.toString()
         );
 
-        const postId = post._id.toString()
+
+
+        const postId = post._id.toString();
+
 
         await expect(deletePostService(postId, fakeAuthorId)).rejects.toThrow("you can only delete your own posts")
     });
@@ -189,5 +192,11 @@ describe("getPostById", () => {
         const fakeId = new mongoose.Types.ObjectId().toString();
        
         await expect(getPostById(fakeId)).rejects.toThrow("Post not found")
+
     });
 });
+
+
+    })
+})
+

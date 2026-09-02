@@ -1,6 +1,8 @@
 import {MongoMemoryServer}from "mongodb-memory-server"
 import mongoose from "mongoose";
-
+import { Users } from "../models/userModel.ts";
+import { Posts } from "../models/postModel.ts";
+import { Categories } from "../models/categoryModel.ts";
 
 let mongoServer: MongoMemoryServer;
 
