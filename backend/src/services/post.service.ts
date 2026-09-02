@@ -51,6 +51,6 @@ export async function deletePostService(id:string, authorId:string):Promise<void
         throw new ForbiddenError("you can only delete your own posts")
     }
     
-    await Posts.findByIdAndDelete(id).populate("author")
+    await Posts.findByIdAndDelete(id).populate("author");
 
 }
