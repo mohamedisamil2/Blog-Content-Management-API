@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import { createCatgoryService } from "../../services/category.service.ts";
-import { createPostService, deletePostService, getAllPosts, getPostById } from "../../services/post.service.ts";
+import { createPostService, deletePostService, getAllPosts, getPostById, updatePostService } from "../../services/post.service.ts";
 import { clearTestDB, connectTestDB, disconnectTestDB } from "../setup";
 import { Users } from "../../models/userModel";
 
@@ -27,8 +27,6 @@ describe("createPost", () => {
         const category = await createCatgoryService("apple");
 
         const categoryId = category._id.toString();
-
-        // const fakeAuthorId = new mongoose.Types.ObjectId().toString();
 
         const post = await createPostService({
             title: "my post",
@@ -190,5 +188,62 @@ describe("getPostById", () => {
        
         await expect(getPostById(fakeId)).rejects.toThrow("Post not found")
 
+<<<<<<< Updated upstream
     })
 })
+=======
+    });
+});
+
+
+describe("updatePost", () => {
+    test("should update post and return update", async () => {
+        const user = await Users.create({
+            name: "Mohamed",
+            email: "test@example.com",
+            password: "123456",
+            role: "admin",
+        });
+        
+        const category = await createCatgoryService("apple");
+
+        const categoryId = category._id.toString();
+
+        const post = await createPostService({
+            title: "my first post",
+            content: "this is my first post",
+            categoryId,
+        },
+            user._id.toString()
+        );
+
+        const postId = post._id.toString();
+
+        const userId = user._id.toString();
+        
+        const updatePost = await updatePostService( postId, userId,  {        
+            title: "new title",
+            content:"new content",
+            categoryId,
+        });
+
+        expect(updatePost.title).toBe("new title");
+    })
+     
+    test("should throw NotFoundError and return error", async () => {
+        const fakePostId = new mongoose.Types.ObjectId().toString();
+        const categoryId = new mongoose.Types.ObjectId().toString();
+        const userId = new mongoose.Types.ObjectId().toString();
+        
+
+        await expect(updatePostService(
+            fakePostId, userId,
+            {
+                title: "new fake",
+                content: "fake content",
+                categoryId 
+            })).rejects.toThrow("Post not found")
+    })
+})    
+
+>>>>>>> Stashed changes
