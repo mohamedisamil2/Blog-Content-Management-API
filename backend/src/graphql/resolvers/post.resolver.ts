@@ -1,5 +1,5 @@
 import {type MyContext } from "../../middleware/auth.ts";
-import { type CreatePostInput, createPostService, deletePostService, getAllPosts, getPostById } from "../../services/post.service.ts";
+import { type CreatePostInput, createPostService, deletePostService, getAllPosts, getPostById,type UpdatePostInput, updatePostService } from "../../services/post.service.ts";
 import { requireAdmin } from "../../utils/requireAdmin.ts";
 
 
@@ -12,6 +12,11 @@ export const postResolver = {
 
             const post = await createPostService(args.input, admin.id);
             return post;
+        },
+        updatePost: async (_parent:unknown, args:{id:string, input:UpdatePostInput}, context:MyContext) => {
+            const authorId = requireAdmin(context.user);
+            const update = await updatePostService(args.id ,authorId.id,args.input, );
+            return update;
         },
         deletePost: async (_parent: unknown, args: { id: string }, context: MyContext) => {
             const admin = requireAdmin(context.user);

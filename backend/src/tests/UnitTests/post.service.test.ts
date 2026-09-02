@@ -97,7 +97,10 @@ describe("deletePost", () => {
             user._id.toString()
         );
 
+
+
         const postId = post._id.toString();
+
 
         await expect(deletePostService(postId, fakeAuthorId)).rejects.toThrow("you can only delete your own posts")
     });
@@ -200,6 +203,7 @@ describe("updatePost", () => {
         });
         
         const category = await createCatgoryService("apple");
+
 
         const categoryId = category._id.toString();
 
