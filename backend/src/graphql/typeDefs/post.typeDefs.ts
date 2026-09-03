@@ -8,6 +8,7 @@ type Post{
     content:String!
     category:Category!
     author:User!
+    comments: [Comment!]!   
     createdAt:String!
     updatedAt:String!
 }

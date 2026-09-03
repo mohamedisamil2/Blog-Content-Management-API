@@ -1,5 +1,10 @@
 import {type MyContext } from "../../middleware/auth.ts";
-import { type CreatePostInput, createPostService, deletePostService, getAllPosts, getPostById,type UpdatePostInput, updatePostService } from "../../services/post.service.ts";
+import { Comments } from "../../models/commentModel.ts";
+import type { IPost } from "../../models/postModel.ts";
+import {
+    type CreatePostInput, createPostService, deletePostService, getAllPosts,
+    getPostById, type UpdatePostInput, updatePostService
+} from "../../services/post.service.ts";
 import { requireAdmin } from "../../utils/requireAdmin.ts";
 
 
@@ -34,4 +39,9 @@ export const postResolver = {
             return await getPostById(args.id);
         },
     },
+    Post: {   // ← جديد! resolver لحقل فرعي جوا نوع Post نفسه
+    comments: async (parent: IPost) => {
+      return await Comments.find({ post: parent._id }).populate('author');
+    },
+  },
 }
