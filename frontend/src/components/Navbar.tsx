@@ -36,7 +36,7 @@ function Navbar({auth}:NavbarProps) {
             </Link>
         </div>
             ) : (
-          <>{auth.role === "admin" ? <Admin /> : <User auth={auth}/>}</>
+          <>{auth.role === "admin" ? <Admin auth={auth}/> : <User auth={auth}/>}</>
         )}   
         </nav>
     </header>
