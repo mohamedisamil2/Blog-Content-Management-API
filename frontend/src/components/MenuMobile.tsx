@@ -39,7 +39,7 @@ function MenuMobile({auth}:MenuMobileProps) {
             </li>
           </>
         ) : (
-          <>{auth.role === "admin" ? <Admin /> : <User />}</>
+          <>{auth.role === "admin" ? <Admin auth={auth} /> : <User />}</>
         )}
       </ul>
     </div>

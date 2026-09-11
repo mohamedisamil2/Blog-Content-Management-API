@@ -34,3 +34,11 @@ mutation Logout{
     logout
 }
 `;
+
+export const Refresh_Token_Mutation = gql`
+mutation RefreshTokenMutation{
+  refreshToken {
+    accessToken
+  }
+}
+`;
