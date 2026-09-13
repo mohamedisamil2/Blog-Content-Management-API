@@ -1,9 +1,15 @@
 export const userTypeDefs = `#graphql 
 
+enum Role {
+  admin
+  user
+}
+
 type User {
   id:ID!
   name:String!
   email:String!
+  role:Role!
   createdAt: String!
 }
 
@@ -19,10 +25,11 @@ type RefreshPayload{
 type Query{
     users:[User]
     user(id:ID!):User!
+    me:User
 }
 
 type Mutation{
-    register(input:RegisterInput!):AuthPayload!
+    registerUser(input:RegisterInput!):AuthPayload!
     login(email:String!, password:String!):AuthPayload!
     logout:Boolean!
     refreshToken:RefreshPayload!

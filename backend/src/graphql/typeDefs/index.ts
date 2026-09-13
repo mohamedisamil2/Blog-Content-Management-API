@@ -1,7 +1,8 @@
+import { analyticsTypeDefs } from "./analytics.typeDefs.ts";
 import { categoryTypeDefs } from "./category.typeDefs.ts";
 import { commentTypeDefs } from "./comment.TypeDefs.ts";
 import { postTypeDefs } from "./post.typeDefs.ts";
 import { userTypeDefs } from "./user.typeDefs.ts";
 
 
-export const typeDefs = [userTypeDefs, postTypeDefs, categoryTypeDefs, commentTypeDefs];
+export const typeDefs = [userTypeDefs, postTypeDefs, categoryTypeDefs, commentTypeDefs,analyticsTypeDefs];

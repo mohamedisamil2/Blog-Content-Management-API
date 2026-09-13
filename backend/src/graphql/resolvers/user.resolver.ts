@@ -1,11 +1,12 @@
 import type{ MyContext } from "../../middleware/auth.ts";
 import { createUser, getUserById, loginUser, logoutUser, refreshAccessToken } from "../../services/user.service.ts";
+import { AuthenticationError } from "../../utils/errors.ts";
 
 
 
 export const userResolver = {
     Mutation: {
-       register: async(_parent:unknown, args:{input:{name:string, email:string, password:string}}, context:MyContext) =>{
+       registerUser: async(_parent:unknown, args:{input:{name:string, email:string, password:string}}, context:MyContext) =>{
             const { user, accessToken, refreshToken } = await createUser(args.input);
 
             // The refresh token goes into the httpOnly cookie
@@ -58,6 +59,17 @@ export const userResolver = {
       args: { id: string },
     ) => {
       return getUserById(args.id);
+    },
+    me: async (_: unknown, args:unknown,context: MyContext) => {
+        
+        if (context.tokenError) {
+            throw new AuthenticationError("Token invalid or Expired");
+        }
+
+        if (!context.user) {
+            return null
+        }
+        return getUserById(context.user.id);
     },
   },
 }
