@@ -11,6 +11,7 @@ export interface AuthUser{
 // شكل الكونتكست الحيشيلو كل ريسولفر
 export interface MyContext{
     user: AuthUser | null,
+    tokenError?: 'expired' | 'invalid';   // ← جديد، يوضح السبب
     req:Request,
     res:Response, // جديد - عشان نقدر نحط/نمسح cookies من جوا أي resolver
 }
@@ -42,7 +43,7 @@ export async function createContext({req,res}:{req:Request, res:Response} ): Pro
             res,
         }
     } catch (error) {
-        return { user: null, req,res };
+        return { user: null, tokenError: 'invalid', req,res };
         
     }
 }
