@@ -27,7 +27,14 @@ const authClient = new SetContextLink((prevContext) => {
 
 // error
 const errorLink = new ErrorLink(({ error, operation, forward }) => {
+    console.log('errorLink triggered:', error);   // ← جديد
   if (!CombinedGraphQLErrors.is(error)) {
+     console.log('Not a CombinedGraphQLErrors, skipping');   // ← جديد
+
+// error
+const errorLink = new ErrorLink(({ error, operation, forward }) => {
+  if (!CombinedGraphQLErrors.is(error)) {
+
     return;
   }
 
@@ -36,6 +43,7 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
       
       return from(refreshAccessToken()).pipe(
         switchMap((newToken) => {
+
           // حفظ التوكن الجديد
           localStorage.setItem("accessToken", newToken);
 
