@@ -1,5 +1,6 @@
 import express from "express"
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { ApolloServer } from "@apollo/server"
 import {schema} from "./graphql/schema.ts"
 import { expressMiddleware } from "@as-integrations/express5";
@@ -18,9 +19,12 @@ export async function createApp() {
     }, })
     
     await apolloServer.start();
-
+    
     app.use(cookieParser())
-    app.use('/graphql', express.json(),expressMiddleware(apolloServer, {context:async ({req,res}) =>  createContext({req,res})}))
+    app.use('/graphql', cors({
+        origin: "http://localhost:5173",
+        credentials:true,
+    }), express.json(),expressMiddleware(apolloServer, {context:async ({req,res}) =>  createContext({req,res})}))
 
     return app;
 }

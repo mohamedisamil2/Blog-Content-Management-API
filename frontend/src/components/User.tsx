@@ -35,13 +35,13 @@ function User({ auth }: UserProps) {
 
   return (
     <div className="hidden md:flex dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost">
+      <div tabIndex={0} role="button" className="btn btn-soft btn-error">
         <User2Icon />
         {auth.name}
       </div>
       <ul
         tabIndex={-2}
-        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm mt-8"
+        className="dropdown-content menu bg-base-100 text-rose-500 rounded-box z-1 w-52 p-2 shadow-sm mt-8"
       >
         <li>
           <Link to="/profile">Profile</Link>

@@ -20,6 +20,7 @@ import ProtectRoute from './components/ProtectRoute';
 import Navbar from './components/Navbar';
 import { Toaster } from 'react-hot-toast';
 import IsLoading from './components/IsLoading';
+import AllPosts from './pages/AllPosts';
 
 
 type MeQuery = {
@@ -39,24 +40,25 @@ function App() {
 
   return (
     <div className='min-h-screen bg-white relative overflow-hidden'>
-    <Toaster/>
+      <Toaster />
       <div>
-        <Navbar auth={auth}/>
-      <Routes>
-        <Route path='/' element={auth?.role !== "admin" ? <Home/> : <Navigate to="/admin"/>} />
-        <Route path='/login' element={<GuestRoute auth={auth}><Login /></GuestRoute> } />
-        <Route path='/register' element={<GuestRoute auth={auth}><Register /></GuestRoute> } />
-        <Route path='/post' element={ <PostDetails />} />
-        <Route path='/category' element={<CategoryPosts />} />
-        <Route path='/admin' element={<ProtectRoute auth={auth} requireAdmin> <Dashboard/> </ProtectRoute>  }>
-          <Route  index element={<Analytics/> } />
-          <Route path='analytics' element={<Analytics />} />
-          <Route path='posts/create' element={<CreatePosts />} />
-          <Route path='edit/posts' element={<EditPosts />} />
-          <Route path='comments' element={<Comments />} />
-          <Route path='categories/create' element={<Categries />} />
-        </Route>
-      </Routes>
+        <Navbar auth={auth} />
+        <Routes>
+          <Route path='/' element={auth?.role !== "admin" ? <Home /> : <Navigate to="/admin" />} />
+          <Route path='/login' element={<GuestRoute auth={auth}><Login /></GuestRoute>} />
+          <Route path='/register' element={<GuestRoute auth={auth}><Register /></GuestRoute>} />
+          <Route path='/post/:id' element={<PostDetails auth={auth!} />} />
+          <Route path='/post' element={<AllPosts/>} />
+          <Route path='/category' element={<CategoryPosts />} />
+          <Route path='/admin' element={<ProtectRoute auth={auth} loading={loading} requireAdmin> <Dashboard /> </ProtectRoute>}>
+            <Route index element={<Analytics />} />
+            <Route path='analytics' element={<Analytics />} />
+            <Route path='posts/create' element={<CreatePosts />} />
+            <Route path='edit/posts' element={<EditPosts />} />
+            <Route path='comments' element={<Comments />} />
+            <Route path='categories/create' element={<Categries />} />
+          </Route>
+        </Routes>
       </div>
     </div>
   );

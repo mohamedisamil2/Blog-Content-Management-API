@@ -1,6 +1,13 @@
-import { InMemoryCache } from "@apollo/client";
 import { ApolloClient, HttpLink } from "@apollo/client";
 import { SetContextLink } from "@apollo/client/link/context";
+import { CombinedGraphQLErrors,InMemoryCache } from "@apollo/client";
+// import { onError } from '@apollo/client/link/error';
+// import {from} from "@apollo/client"
+import { refreshAccessToken } from "../utils/refreshToken";
+import { ErrorLink } from "@apollo/client/link/error";
+
+import { from, EMPTY } from "rxjs";
+import { catchError, switchMap } from "rxjs/operators";
 
 const httpLink = new HttpLink({
     uri: "http://localhost:4000/graphql",
@@ -18,13 +25,16 @@ const authClient = new SetContextLink((prevContext) => {
     };
 });
 
-<<<<<<< Updated upstream
-=======
 // error
 const errorLink = new ErrorLink(({ error, operation, forward }) => {
     console.log('errorLink triggered:', error);   // ← جديد
   if (!CombinedGraphQLErrors.is(error)) {
      console.log('Not a CombinedGraphQLErrors, skipping');   // ← جديد
+
+// error
+const errorLink = new ErrorLink(({ error, operation, forward }) => {
+  if (!CombinedGraphQLErrors.is(error)) {
+
     return;
   }
 
@@ -33,7 +43,7 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
       
       return from(refreshAccessToken()).pipe(
         switchMap((newToken) => {
-            console.log('Got new token:', newToken);
+
           // حفظ التوكن الجديد
           localStorage.setItem("accessToken", newToken);
 
@@ -64,9 +74,10 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
   return;
 });;
 
->>>>>>> Stashed changes
 
 export const client = new ApolloClient({
-    link: authClient.concat(httpLink),
+    link:errorLink.concat(authClient).concat(httpLink),
     cache: new InMemoryCache(),
 });
+
+

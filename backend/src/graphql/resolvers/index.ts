@@ -3,6 +3,7 @@ import { userResolver } from "./user.resolver.ts"
 import { postResolver } from "./post.resolver.ts"
 import { categoryResolver } from "./category.resolver.ts";
 import { commentResolver } from "./comment.resolver.ts";
+import { analyticsResolver } from "./analytics.resolver.ts";
 
 
-export const resolvers = merge({}, userResolver, postResolver,categoryResolver,commentResolver);
+export const resolvers = merge({}, userResolver, postResolver,categoryResolver,commentResolver, analyticsResolver);

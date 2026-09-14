@@ -23,7 +23,7 @@ function InputField<T extends FieldValues>({
 
   // for style
   const InputStyle =
-    "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-500 ";
+    "w-full rounded-lg border border-rose-300 bg-white px-4 py-3 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-500 ";
 
   return (
     <div className="flex flex-col gap-2 w-full">
